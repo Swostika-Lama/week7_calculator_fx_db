@@ -5,23 +5,9 @@ FROM eclipse-temurin:21-jdk
 ENV DISPLAY=host.docker.internal:0.0
 
 # Install dependencies for GUI + Maven build
-#RUN apt-get update && \
-#    apt-get install -y maven wget unzip libgtk-3-0 libgbm1 libx11-6 && \
-#    apt-get clean && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && apt-get install -y \
-    maven wget unzip \
-    libgtk-3-0 \
-    libgl1 \
-    mesa-utils \
-    libxext6 \
-    libxrender1 \
-    libxtst6 \
-    libxi6 \
-    libxxf86vm1 \
-    libxrandr2 \
-    libasound2t64 \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -y maven wget unzip libgtk-3-0 libgbm1 libx11-6 && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
 # Download JavaFX SDK 21
