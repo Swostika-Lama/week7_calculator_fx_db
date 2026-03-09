@@ -30,9 +30,5 @@ RUN mvn clean package -DskipTests
 COPY target/sum-product_fx-1.0-SNAPSHOT.jar app.jar
 
 # Run with software rendering enabled
-CMD ["java",
-     "-Dprism.order=sw",
-     "-Dprism.verbose=true",
-     "--module-path", "/opt/javafx-sdk-21/lib",
-     "--add-modules", "javafx.controls,javafx.fxml",
-     "-jar", "app.jar"]
+CMD ["java", "-Dprism.order=sw", "-Dprism.verbose=true", "--module-path", "/opt/javafx-sdk-21/lib", "--add-modules", "javafx.controls,javafx.fxml", "-jar", "app.jar"]
+
