@@ -9,7 +9,7 @@ RUN apt-get update && \
     apt-get install -y \
         maven wget unzip \
         libgtk-3-0 libgbm1 libx11-6 \
-        mesa-utils libgl1-mesa-glx libgl1-mesa-dri && \
+        mesa-utils libgl1 libgl1-mesa-dri && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Download JavaFX SDK 21
@@ -31,4 +31,3 @@ COPY target/sum-product_fx-1.0-SNAPSHOT.jar app.jar
 
 # Run with software rendering enabled
 CMD ["java", "-Dprism.order=sw", "-Dprism.verbose=true", "--module-path", "/opt/javafx-sdk-21/lib", "--add-modules", "javafx.controls,javafx.fxml", "-jar", "app.jar"]
-
