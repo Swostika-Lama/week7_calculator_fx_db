@@ -1,33 +1,43 @@
-# Use a known-good OpenJDK base image
+# Use OpenJDK 21
 FROM eclipse-temurin:21-jdk
 
-# Optional: set up display (for GUI forwarding)
-ENV DISPLAY=host.docker.internal:0.0
+# Set display for X11 forwarding
+ENV DISPLAY=host.docker.internal:0
 
-# Install dependencies for GUI + Mesa software OpenGL
+# Install required libraries
 RUN apt-get update && \
     apt-get install -y \
         maven wget unzip \
-        libgtk-3-0 libgbm1 libx11-6 \
-        mesa-utils libgl1 libgl1-mesa-dri && \
+        libgtk-3-0 libgl1 libgl1-mesa-dri libx11-6 libxtst6 libxi6 libxrender1 && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Download JavaFX SDK 21 (ARM64 for Apple Silicon)
-RUN wget https://download2.gluonhq.com/openjfx/21/openjfx-21_linux-aarch64_bin-sdk.zip -O /tmp/openjfx.zip && \
-    unzip /tmp/openjfx.zip -d /opt && \
-    rm /tmp/openjfx.zip
+# Download JavaFX SDK (ARM64 for Apple Silicon)
+RUN wget https://download2.gluonhq.com/openjfx/21/openjfx-21_linux-aarch64_bin-sdk.zip -O /tmp/javafx.zip && \
+    unzip /tmp/javafx.zip -d /opt && \
+    rm /tmp/javafx.zip
+
+# Set JavaFX path
+ENV JAVAFX_HOME=/opt/javafx-sdk-21
 
 WORKDIR /app
 
-# Copy project files
+# Copy Maven files first (for caching)
 COPY pom.xml .
+
+# Download dependencies
+RUN mvn -q -e -DskipTests dependency:go-offline
+
+# Copy source
 COPY src ./src
 
-# Build the shaded JAR
+# Build application
 RUN mvn clean package -DskipTests
 
-# Copy fat jar
-COPY target/sum-product_fx-1.0-SNAPSHOT.jar app.jar
-
-# Run with software rendering enabled
-CMD ["java", "-Dprism.order=sw", "-Dprism.verbose=true", "--module-path", "/opt/javafx-sdk-21/lib", "--add-modules", "javafx.controls,javafx.fxml", "-jar", "app.jar"]
+# Run JavaFX app
+CMD ["java", \
+"-Dprism.order=sw", \
+"-Dprism.verbose=true", \
+"-Djava.library.path=/opt/javafx-sdk-21/lib", \
+"--module-path", "/opt/javafx-sdk-21/lib", \
+"--add-modules", "javafx.controls,javafx.fxml", \
+"-jar", "target/sum-product_fx-1.0-SNAPSHOT.jar"]
