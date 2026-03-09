@@ -34,14 +34,10 @@ pipeline {
         }
 
         stage('Build Docker Image') {
-            steps {
-                sh '''
-                    docker build \
-                        --platform linux/amd64, linux/arm64 \
-                        -t ${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG} .
-                '''
-            }
-        }
+                    steps {
+                        sh 'docker build -t ${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG} .'
+                    }
+                }
 
         stage('Push Docker Image to Docker Hub') {
             steps {
