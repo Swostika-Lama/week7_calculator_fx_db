@@ -12,8 +12,8 @@ RUN apt-get update && \
         mesa-utils libgl1 libgl1-mesa-dri && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Download JavaFX SDK 21
-RUN wget https://download2.gluonhq.com/openjfx/21/openjfx-21_linux-x64_bin-sdk.zip -O /tmp/openjfx.zip && \
+# Download JavaFX SDK 21 (ARM64 for Apple Silicon)
+RUN wget https://download2.gluonhq.com/openjfx/21/openjfx-21_linux-aarch64_bin-sdk.zip -O /tmp/openjfx.zip && \
     unzip /tmp/openjfx.zip -d /opt && \
     rm /tmp/openjfx.zip
 
