@@ -82,8 +82,8 @@ public class ResultService {
 
     // Read DB credentials from environment variables
     private static final String DB_NAME = System.getenv().getOrDefault("DB_NAME", "calc_data");
-    private static final String DB_USER = System.getenv().getOrDefault("DB_USER", "root");
-    private static final String DB_PASSWORD = System.getenv().getOrDefault("DB_PASSWORD", "Test12");
+    private static final String DB_USER = System.getenv().getOrDefault("DB_USER", "calc_user");
+    private static final String DB_PASSWORD = System.getenv().getOrDefault("DB_PASSWORD", "strongpassword");
     private static final String DB_PORT = System.getenv().getOrDefault("DB_PORT", "3306");
 
     static {
