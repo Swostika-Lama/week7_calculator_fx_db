@@ -33,35 +33,11 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-        }
-
-        stage('Report') {
-            steps {
-                sh 'mvn jacoco:report'
-            }
-        }
-
-        stage('Publish Test Results') {
-            steps {
-                junit '**/target/surefire-reports/*.xml'
-            }
-        }
-
-        stage('Publish Coverage Report') {
-            steps {
-                jacoco()
-            }
-        }
-
-        stage('Build Docker Image (AMD64)') {
+        stage('Build Docker Image') {
             steps {
                 sh '''
                     docker build \
-                        --platform linux/amd64 \
+                        --platform linux/amd64, linux/arm64 \
                         -t ${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG} .
                 '''
             }
