@@ -12,16 +12,17 @@ ENV DISPLAY=host.docker.internal:0.0
 RUN apt-get update && apt-get install -y \
     maven wget unzip \
     libgtk-3-0 \
-    libgl1-mesa-glx \
     libgl1 \
+    mesa-utils \
     libxext6 \
     libxrender1 \
     libxtst6 \
     libxi6 \
     libxxf86vm1 \
     libxrandr2 \
-    libasound2 \
+    libasound2t64 \
     && rm -rf /var/lib/apt/lists/*
+
 
 # Download JavaFX SDK 21
 RUN wget https://download2.gluonhq.com/openjfx/21/openjfx-21_linux-x64_bin-sdk.zip -O /tmp/openjfx.zip && \
