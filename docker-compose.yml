@@ -7,7 +7,7 @@ services:
     restart: always
     environment:
       # make sure your DB_PASSWORD is correct mine is root
-      MYSQL_ROOT_PASSWORD: Test12
+      MYSQL_ROOT_PASSWORD: strongpassword
       MYSQL_DATABASE: calc_data
       # Make sure your 3307 port is available
     ports:
@@ -28,9 +28,9 @@ services:
       DB_HOST: db
       DB_PORT: 3306
       # make sure your DB_USER name is correct mine is root
-      DB_USER: root
+      DB_USER: calc_user
       # make sure your DB_PASSWORD is correct mine is root
-      DB_PASSWORD: Test12
+      DB_PASSWORD: strongpassword
       DISPLAY: host.docker.internal:0
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
