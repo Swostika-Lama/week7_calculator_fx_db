@@ -7,5 +7,7 @@ CREATE TABLE IF NOT EXISTS calc_results (
                                             number2 DOUBLE NOT NULL,
                                             sum_result DOUBLE NOT NULL,
                                             product_result DOUBLE NOT NULL,
+                                            difference_result DOUBLE NOT NULL,
+                                            division_result DOUBLE NOT NULL,
                                             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

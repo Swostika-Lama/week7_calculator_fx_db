@@ -37,5 +37,4 @@ services:
 #    network_mode: bridge # it cancels network of docker -> docker cannot find host db.
 volumes:
   db_data:
-
 #  Then execute docker compose up --build
